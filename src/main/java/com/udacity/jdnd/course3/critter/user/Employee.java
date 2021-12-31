@@ -3,12 +3,13 @@ package com.udacity.jdnd.course3.critter.user;
 import com.udacity.jdnd.course3.critter.schedule.Schedule;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue
@@ -18,20 +19,12 @@ public class Employee {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "EmployeeSkill")
-    @JoinColumn(name = "id")
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> skills;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "DayOfWeek")
-    @JoinColumn(name = "id")
+    @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
 
     public Employee() {
     }

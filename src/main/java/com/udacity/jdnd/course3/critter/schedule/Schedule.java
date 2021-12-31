@@ -18,19 +18,17 @@ public class Schedule {
     @Column(name = "schedule_id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Employee> employees;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Pet> pets;
 
     @Column(name = "date")
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "EmployeeSkill")
-    @JoinColumn(name = "id")
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> activities;
 
     public Schedule() {
